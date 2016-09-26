@@ -1,0 +1,19 @@
+-# in app/views/users/show.html.haml
+
+%h2 Details about #{@user.email}
+
+%ul#details
+  %li
+    User_Id:
+    = @user.user_id
+  %li
+    Email:
+    = @user.email
+
+%h3 Description:
+
+%p#description= @user.session_token
+
+= link_to 'Edit', edit_user_path(@user)
+= button_to 'Delete', user_path(@movie), :method => :delete, :confirm => 'Are you sure?'
+= link_to 'Back to user list', users_path
