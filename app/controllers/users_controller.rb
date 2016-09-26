@@ -47,4 +47,3 @@ class UsersController < ApplicationController
     flash[:notice] = "User '#{@user.email}' deleted."
     redirect_to users_path
   end
-end
