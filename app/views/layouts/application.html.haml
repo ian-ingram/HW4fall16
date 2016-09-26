@@ -7,7 +7,7 @@
     = csrf_meta_tags
 
   %body
-      %button_to Example, {:controller => 'users_controller', :action => 'new_user_path'}
+      = button_to 'Sign Up/Login', 'new_user_path', :method => :get
       %h1.title Rotten Potatoes!
       #main
         - if flash[:notice]
