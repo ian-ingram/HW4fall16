@@ -19,15 +19,13 @@ class UsersController < ApplicationController
 
   def create
     @user=User.create_user!(params[:user])
-
-      if !!(@user)
+    if !!(@user)
       flash[:notice] = "New user #{@user.user_id} was successfully created."
       redirect_to movies_path
     else
       flash[:notice] = "The User Id #{params[:user][:user_id]} already exists"
       redirect_to new_user_path
     end
-  end
   end
 
   def edit
