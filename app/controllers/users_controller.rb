@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
+
   def user_params
-    params.require(:user).permit(:user_id, :email, :session_token, :timestamps)
+    params.require(:user).permit(:user_id, :email, :session_token)
   end
 
   def show
@@ -18,12 +19,15 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user=User.create_user!(params[:user])
-    if !!(@user)
-      flash[:notice] = "New user #{@user.user_id} was successfully created."
-      redirect_to movies_path
+    if((User.find_by user_id: params[:user][:user_id])==nil)
+      @user = User.create_user!(params)
+      flash[:notice] = "Welcome #{@user.user_id}. Your account has been created"
+      flash[:class]= "flash_message"
+      #redirect_to movies_path
+      redirect_to login_path
     else
-      flash[:notice] = "The User Id #{params[:user][:user_id]} already exists"
+      flash[:notice] = "Sorry this user-id is taken. Try again."
+      flash[:class]= "flash_message"
       redirect_to new_user_path
     end
   end
@@ -36,6 +40,7 @@ class UsersController < ApplicationController
     @user = User.find params[:id]
     @user.update_attributes!(user_params)
     flash[:notice] = "#{@user.email} was successfully updated."
+    flash[:class]= "flash_message"
     redirect_to user_path(@user)
   end
 
@@ -43,6 +48,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
     flash[:notice] = "User '#{@user.email}' deleted."
+    flash[:class]= "flash_message"
     redirect_to users_path
   end
 end

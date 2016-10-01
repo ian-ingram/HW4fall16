@@ -1,4 +1,5 @@
 class MoviesController < ApplicationController
+before_filter :set_current_user
 
   def movie_params
     params.require(:movie).permit(:title, :rating, :description, :release_date)
@@ -21,6 +22,7 @@ class MoviesController < ApplicationController
   def create
     @movie = Movie.create!(movie_params)
     flash[:notice] = "#{@movie.title} was successfully created."
+    flash[:class]= "flash_message"
     redirect_to movies_path
   end
 
@@ -32,6 +34,7 @@ class MoviesController < ApplicationController
     @movie = Movie.find params[:id]
     @movie.update_attributes!(movie_params)
     flash[:notice] = "#{@movie.title} was successfully updated."
+    flash[:class]= "flash_message"
     redirect_to movie_path(@movie)
   end
 
@@ -39,6 +42,7 @@ class MoviesController < ApplicationController
     @movie = Movie.find(params[:id])
     @movie.destroy
     flash[:notice] = "Movie '#{@movie.title}' deleted."
+    flash[:class]= "flash_message"
     redirect_to movies_path
   end
 
